@@ -22,4 +22,17 @@ public class MainCircle extends Circle
         this.x += dx;
         this.y += dy;
     }
+
+    public void resetRadius()
+    {
+        x = CanvasView.width / 2;
+        y = CanvasView.height / 2;
+        radius = DEFAULT_RADIUS;
+    }
+
+    public void increase()
+    {
+        int percent = radius / 100 * 10;
+        radius += percent;
+    }
 }

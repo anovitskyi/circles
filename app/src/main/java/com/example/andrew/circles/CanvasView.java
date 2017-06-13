@@ -76,4 +76,14 @@ public class CanvasView extends View implements Viewable
        }
        return true;
     }
+
+    @Override
+    public void reset()
+    {
+        drawCircle(manager.getCircle());
+        for (int i = 0; i < manager.getEnemies().size(); i++)
+        {
+            drawCircle(manager.getEnemies().get(i));
+        }
+    }
 }

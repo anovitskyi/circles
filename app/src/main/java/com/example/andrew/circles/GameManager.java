@@ -1,6 +1,8 @@
 package com.example.andrew.circles;
 
 
+import android.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,11 @@ public class GameManager
     {
         this.canvasView = canvasView;
         this.circle = new MainCircle(CanvasView.width / 2, CanvasView.height / 2);
+        initEnemiesCircles();
+    }
 
+    private void initEnemiesCircles()
+    {
         enemies = new ArrayList<>(10);
 
         enemies.add(EnemyCircle.getRandomCircle());
@@ -23,12 +29,13 @@ public class GameManager
         {
             if (Double.compare(Math.random(), 0.5) == 1)
             {
+                Circle area = new Circle(circle.x, circle.y, circle.radius * 3);
                 EnemyCircle c;
                 do
                 {
                     c = EnemyCircle.getRandomCircle();
                 }
-                while (c.intersect(circle));
+                while (c.intersect(area));
                 enemies.add(c);
             }
         }
@@ -50,11 +57,48 @@ public class GameManager
 
     public void moveToPosition(int x, int y)
     {
+        Circle circleToDelete = null;
         circle.changePosition(x, y);
+        for (EnemyCircle enemy : enemies)
+        {
+            if (enemy.intersect(circle))
+            {
+                if (enemy.getColor() == Color.RED)
+                    stopGame();
+                else
+                {
+                    circleToDelete = enemy;
+                    circle.increase();
+                    changeColors();
+                }
+            }
+        }
+        if (circleToDelete != null)
+            enemies.remove(circleToDelete);
+        if (isNotEnd() == false)
+            stopGame();
         for (EnemyCircle enemy : enemies)
         {
             enemy.move();
         }
+    }
+
+    private boolean isNotEnd()
+    {
+        boolean flag = false;
+        for (EnemyCircle enemy : enemies)
+        {
+            if (enemy.getColor() == Color.GREEN)
+                flag = true;
+        }
+        return flag;
+    }
+
+    private void stopGame()
+    {
+        circle.resetRadius();
+        initEnemiesCircles();
+        canvasView.reset();
     }
 
     public List<EnemyCircle> getEnemies()

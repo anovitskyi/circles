@@ -9,7 +9,7 @@ public class EnemyCircle extends Circle
 {
     private static final int ENEMY_COLOR = Color.RED;
     private static final int FOOD_COLOR = Color.GREEN;
-    private static final int DEFAULT_SPEED = 10;
+    private static final int DEFAULT_SPEED = 5;
     private int dx;
     private int dy;
 
@@ -47,6 +47,10 @@ public class EnemyCircle extends Circle
     public void move()
     {
         x += dx;
+        if (x >= CanvasView.width || x <= 0)
+            dx *= -1;
         y += dy;
+        if (y >= CanvasView.height || y <= 0)
+            dy *= -1;
     }
 }
