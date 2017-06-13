@@ -51,6 +51,10 @@ public class GameManager
     public void moveToPosition(int x, int y)
     {
         circle.changePosition(x, y);
+        for (EnemyCircle enemy : enemies)
+        {
+            enemy.move();
+        }
     }
 
     public List<EnemyCircle> getEnemies()
