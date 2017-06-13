@@ -22,7 +22,24 @@ public class GameManager
         for (int i = 0; i < MAX_CIRCLES; i++)
         {
             if (Double.compare(Math.random(), 0.5) == 1)
-                enemies.add(EnemyCircle.getRandomCircle());
+            {
+                EnemyCircle c;
+                do
+                {
+                    c = EnemyCircle.getRandomCircle();
+                }
+                while (c.intersect(circle));
+                enemies.add(c);
+            }
+        }
+        changeColors();
+    }
+
+    private void changeColors()
+    {
+        for (EnemyCircle enemy : enemies)
+        {
+            enemy.changeColorDependsOn(circle);
         }
     }
 

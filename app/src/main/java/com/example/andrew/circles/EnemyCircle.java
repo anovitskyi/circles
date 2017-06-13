@@ -8,6 +8,7 @@ import java.util.Random;
 public class EnemyCircle extends Circle
 {
     private static final int ENEMY_COLOR = Color.RED;
+    private static final int FOOD_COLOR = Color.GREEN;
 
     public EnemyCircle(int x, int y, int radius)
     {
@@ -24,5 +25,13 @@ public class EnemyCircle extends Circle
         circle = new EnemyCircle(width, height, rad);
         circle.setColor(ENEMY_COLOR);
         return circle;
+    }
+
+    public void changeColorDependsOn(Circle circle)
+    {
+        if (radius > circle.getRadius())
+            setColor(ENEMY_COLOR);
+        else
+            setColor(FOOD_COLOR);
     }
 }

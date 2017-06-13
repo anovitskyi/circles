@@ -38,4 +38,9 @@ public class Circle
     {
         this.color = color;
     }
+
+    public boolean intersect(Circle circle)
+    {
+        return  radius + circle.radius >= Math.sqrt(Math.pow(x - circle.x, 2)) - Math.sqrt(Math.pow(y - circle.y, 2));
+    }
 }
